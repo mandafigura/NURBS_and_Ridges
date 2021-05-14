@@ -1,0 +1,20 @@
+function [E,Eu,Ev,Euu,Euv,Evv,F,Fu,Fv,Fuu,Fuv,Fvv,G,Gu,Gv,Guu,Guv,Gvv] = first_fundamental_form(Du,Dv,Duu,Duv,Dvv,Duuu,Duuv,Duvv,Dvvv)
+    E   = dot(Du,Du);
+    Eu  = dot(Du,Duu).*2;
+    Ev  = dot(Du,Duv).*2;
+    Euu = dot(Duu,Duu).*2 + dot(Du,Duuu).*2;
+    Euv = dot(Duv,Duu).*2 + dot(Du,Duuv).*2;
+    Evv = dot(Duv,Duv).*2 + dot(Du,Duvv).*2;
+    F   = dot(Du,Dv);
+    Fu  = dot(Dv,Duu) + dot(Du,Duv);
+    Fv  = dot(Dv,Duv) + dot(Du,Dvv);
+    Fuu = dot(Duv,Duu) + dot(Dv,Duuu) + dot(Duu,Duv) + dot(Du,Duuv);
+    Fuv = dot(Dvv,Duu) + dot(Dv,Duuv) + dot(Duv,Duv) + dot(Du,Duvv);
+    Fvv = dot(Dvv,Duv) + dot(Dv,Duvv) + dot(Duv,Dvv) + dot(Du,Dvvv);
+    G   = dot(Dv,Dv);
+    Gu  = dot(Dv,Duv).*2;
+    Gv  = dot(Dv,Dvv).*2;
+    Guu = dot(Duv,Duv).*2 + dot(Dv,Duuv).*2;
+    Guv = dot(Dvv,Duv).*2 + dot(Dv,Duvv).*2;
+    Gvv = dot(Dvv,Dvv).*2 + dot(Dv,Dvvv).*2;
+end
