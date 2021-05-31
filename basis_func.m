@@ -1,14 +1,13 @@
-function [N] = basis_functions_u(u,U,n)
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%Computes all the basis functions values N_{i,k}(u) til degree n-1.
-    %%Based on the recursive definition of the basis functions.
-    %%Input:  
-    %%        Parameter u
-    %%        Knot Vector U
-    %%        B-Spline degree is n-1
-    %%Return: 
-    %%        A matrix N(m,n) with all N_{i,k}(u) values (m is the size of U)
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [N] = basis_func(u,U,n)
+    %% Computes all the basis functions values N_{i,k}(u) til degree n-1.
+    % Input:  
+    %        Parameter u
+    %        Knot Vector U
+    %        B-Spline degree is n-1
+    % Return: 
+    %        A matrix N(m,n) with all N_{i,k}(u) values (m is the size of U)
+
+    %% Based on the recursive definition
     m = size(U,2);                %how many knots?
     for k = 1:n                   %runs through basis functions degrees
        if k == 1                  %initial case, k = 0

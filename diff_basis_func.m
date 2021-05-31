@@ -1,17 +1,16 @@
-function [DN] = diff_basis_func_on_u(n,u,U,c,i)
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%---BASED ON THE NURBS BOOK ALGORITHM 2.5---
-    %%Computes the (c-1)th derivative of basis functions of degree n-1
-    %%Input:  
-    %%        Parameter u
-    %%        Knot Vector U
-    %%        B-Spline degree is n-1
-    %%        Diff order is c-1
-    %%        N_i-1,n(u) to be computed (i)
-    %%Return: 
-    %%        Derivative array DN
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [DN] = diff_basis_func(n,u,U,c,i)
+    %% ---BASED ON THE NURBS BOOK ALGORITHM 2.5---
+    %% Computes the (c-1)th derivative of basis functions of degree n-1
+    % Input:  
+    %         Parameter u
+    %         Knot Vector U
+    %         B-Spline degree is n-1
+    %         Diff order is c-1
+    %         N_i-1,n(u) to be computed (i)
+    % Return: 
+    %         Derivative array DN
 
+    %% Computes basis functions
     %local property
     if(u < U(i) | u >= U(i+n))
         for k=1:c
@@ -46,6 +45,7 @@ function [DN] = diff_basis_func_on_u(n,u,U,c,i)
                end
             end
         end
+        %% Computes derivatives
         %degree 0 derivative
         DN(1) = N(1,n);
         %compute derivatives of each degree til degree c-1
@@ -65,24 +65,18 @@ function [DN] = diff_basis_func_on_u(n,u,U,c,i)
                %%%%alteracao para evitar right nao definido
                   test = i+j+n+jj-1;
                   if(test <= length(U))
-                    Uright = U(i+j+n+jj-1);  %%%linha orig
-                  %else
-                  %    fprintf('\n\n----entrei no cuida U === 0 ----\n\n')
-                  %  Uright = 0;
+                    Uright = U(i+j+n+jj-1);  %%%linha original
                   end
                %%%%%%%%fim alteração
                   if(ND(j+2) == 0)
                       ND(j+1) = (n-k+jj).*saved;
                       saved  = 0;
                   else
-                      %alteração para nao dar inf (divisao por 0)
+                  %%%%%alteração para nao dar inf (divisao por 0)
                       if((Uright-Uleft)~=0)
                           temp = ND(j+2)./(Uright-Uleft);  %%linha original
-                      %else
-                      %    fprintf('\n\n----entrei no cuida Infinito === 0 ----\n\n')
-                      %    temp = 0;
                       end
-                      %fim alteracao
+                  %%%%%fim alteracao
                      ND(j+1) = (n-k+jj).*(saved-temp);
                      saved = temp;
                   end

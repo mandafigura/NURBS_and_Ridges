@@ -1,4 +1,16 @@
-function [answer] = regula_falsi_2d(a,b,c,itmax)
+function [answer] = regula_falsi_2d(the_function,a,b,c,itmax)
+    %% Generalized Regula-Falsi Method for 2 dimensions
+    %% Description:
+    %               finds an approximate value of the zero of a function F
+    %               inside a 2-simplex. Algorithm from the article: "Simplicial
+    %               Methods for the Solution of Systems of Nonlinear Equations"
+    %- Input:
+    %         sis_func, the function F
+    %         a b c,    each one is a vector of size 2 representing the
+    %                   2-simplex coordinates
+    %         itmax,    max number of iterations for the method
+    %- Output:
+    %         answer,   the best approximation after itmax iterations
     %% step (i)
     x(1,:) = a;
     x(2,:) = b;
@@ -6,15 +18,15 @@ function [answer] = regula_falsi_2d(a,b,c,itmax)
     counter = 0;
     while(counter <= itmax)
         %% step (ii)
-        f0 = sis_func(x(1,:));
-        f1 = sis_func(x(2,:));
-        f2 = sis_func(x(3,:));
+        f0 = the_function(x(1,:));
+        f1 = the_function(x(2,:));
+        f2 = the_function(x(3,:));
         C = [1 1 1; f0' f1' f2'];
         d = [1; 0; 0];
         lambda = lsqnonneg(C,d);
         %% step (iii)
         answer = sum(diag(lambda)*[x(1,:);x(2,:);x(3,:)]);
-        fx = sis_func(answer);
+        fx = the_function(answer);
         if(fx == [0 0])
             return
         end

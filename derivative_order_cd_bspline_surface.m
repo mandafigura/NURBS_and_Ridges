@@ -11,19 +11,18 @@ function [D] = derivative_order_cd_bspline_surface(u,v,U,V,P,n,m,c,d)
     % Return: 
     %         Partial Derivatives of order (c-1)x(d-1) of the surface in each parameter [D]
     
-    
     %% Computes de derivatives of each basis functions of degree n and m, for all i,j
     for i=1:(length(U)-n)
-        DNU(i,:) =  diff_basis_func_on_u(n,u,U,c,i);
+        DNU(i,:) =  diff_basis_func(n,u,U,c,i);
     end
     for j=1:(length(V)-m)
-        DNV(j,:) =  diff_basis_func_on_u(m,v,V,d,j);
+        DNV(j,:) =  diff_basis_func(m,v,V,d,j);
     end
     %% Computes the derivatives in each axis
     D = zeros(1,size(P,3));
     for i = 1:size(P,1)
         for j = 1:size(P,2)
-            for h = 1:size(P,3)     %goes through axis
+            for h = 1:size(P,3)         %goes through axis
                D(h) = D(h) + DNU(i,c).*DNV(j,d).*P(i,j,h); 
             end
         end
